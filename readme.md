@@ -16,4 +16,3 @@ opened gitbash in that directory
 
 ran the program - forgot that I already had wget installed, so a new user'd have to install that first.
 
-# and now showing James around
