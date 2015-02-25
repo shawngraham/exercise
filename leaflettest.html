@@ -1,312 +1,58 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-<title>New York Vintage Maps</title>
-<meta charset="utf-8" />
-<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
-    <style>
-        body {
-            padding: 0;
-            margin: 0;
-        }
-        html, body, #map {
-            height: 100%;
-            width: 100%;
-        }
-		
-		#info {
-	position: absolute;
-	font-family: 'Raleway', sans-serif;
-	height:30px;
-	right:5px;
-	top: 10px;
-	font-size:2em;
-		}
-		
+	<title>Leaflet Quick Start Guide Example</title>
+	<meta charset="utf-8" />
 
-		
-		.myButton {
-	-moz-box-shadow:inset 0px 1px 3px 0px #91b8b3;
-	-webkit-box-shadow:inset 0px 1px 3px 0px #91b8b3;
-	box-shadow:inset 0px 1px 3px 0px #91b8b3;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
-	background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
-	background-color:#ababab;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	border-radius:5px;
-	border:1px solid #566963;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:arial;
-	font-size:15px;
-	font-weight:bold;
-	padding:5px 15px;
-	text-decoration:none;
-	text-shadow:0px -1px 0px #2b665e;
-}
-.myButton:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6c7c7c), color-stop(1, #768d87));
-	background:-moz-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-webkit-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-o-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-ms-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
-	background-color:#6c7c7c;
-}
-.myButton:active {
-	position:relative;
-	top:1px;
-}
-		
-    </style>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+ <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 </head>
 <body>
-<div id="map"></div>
-<div id="info" style="z-index:2";>
+	<div id="map" style="width: 600px; height: 400px"></div>
 
-<button onclick="updateRome()" class="myButton">1784</button>
-<button onclick="updateSat()" class="myButton">1844</button>
-<button onclick="updateDark()" class="myButton">1849</button>
-<button onclick="updateGuild()" class="myButton">1857</button>
-<button onclick="updateCycle()" class="myButton">Aerial Survey 1921</button>
-<button onclick="updateTerrain()" class="myButton">2015</button> 
-</div>
-<script src=""http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
- 
-<script>
+ <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+	<script>
 
+		var map = L.map('map').setView([51.505, -0.09], 13);
 
-var osmLink = '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>.',
-warperLink= 'Map tiles by The Lionel Pincus & Princess Firyal Map Division, The New York Public Library, under <a href="http://creativecommons.org/publicdomain/zero/1.0/">Creative Commons CC0 1.0 Universal Public Domain Dedication</a>.';
-
-var osmUrl = 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
-landUrl = 'http://maps.nypl.org/warper/maps/tile/489850/{z}/{x}/{y}.png',
-cycleUrl = 'http://maps.nypl.org/warper/maps/tile/16758/{z}/{x}/{y}.png',
-satUrl = 'http://maps.nypl.org/warper/maps/tile/15178/{z}/{x}/{y}.png',
-romeUrl = 'http://maps.nypl.org/warper/maps/tile/15265/{z}/{x}/{y}.png',
-guildUrl = 'http://maps.nypl.org/warper/maps/tile/16172/{z}/{x}/{y}.png',
-darkUrl = 'http://maps.nypl.org/warper/maps/tile/15145/{z}/{x}/{y}.png',
-warperUrl = 'http://maps.nypl.org/warper/maps/tile/27562/{z}/{x}/{y}.png',
-
-osmAttrib = '&copy; ' + osmLink,
-thunAttrib = '&copy; '+warperLink;
-satAttrib = '&copy; '+warperLink;
-romeAttrib = '&copy; '+warperLink;
-guildAttrib = '&copy; '+warperLink;
-cycleAttrib = '&copy; '+warperLink;
-warperAttrib = '&copy; '+warperLink;
-
- 
-var osmMap = L.tileLayer(osmUrl, {attribution: osmAttrib}),
-landMap = L.tileLayer(landUrl, {attribution: thunAttrib}),
-satMap = L.tileLayer(satUrl, {attribution: satAttrib}),
-romeMap = L.tileLayer(romeUrl, {attribution: romeAttrib}),
-guildMap = L.tileLayer(guildUrl, {attribution: guildAttrib}),
-cycleMap = L.tileLayer(cycleUrl, {attribution: cycleAttrib}),
-darkMap = L.tileLayer(darkUrl, {attribution: guildAttrib});
-warperMap = L.tileLayer(warperUrl, {attribution: warperAttrib});
- 
-var map = L.map('map', {
-layers: [romeMap] // only add one!
-})
-.setView([40.713761,-73.998082], 16);
-
-var LeafIcon = L.Icon.extend({
-			options: {
-				iconSize:     [37, 37],
-				iconAnchor:   [22, 36],
-				popupAnchor:  [-3, -46]
-			}
-		});
-var greenIcon = new LeafIcon({iconUrl: 'camera.png'});
-
-			
-var marker = L.marker([40.707743,-74.011728], {icon: greenIcon})
-            .addTo(map)
-			.bindPopup("<iframe width=\"500\" height=\"281\" src=\"//www.youtube.com/embed/IsrdkySRSCY\" frameborder=\"0\" allowfullscreen></iframe> <br>Lower Broadway 1903");
-        
-var marker2 = L.marker([40.713143,-73.992508], {icon: greenIcon})
-            .addTo(map)
-			.bindPopup("<a href=\"http://digitalgallery.nypl.org/nypldigital/id?482679\" title=\"Pike and Henry Streets, Manhat... Digital ID: 482679. New York Public Library\"><img src=\"http://images.nypl.org/?id=482679&t=r\" alt=\"Pike and Henry Streets, Manhat... Digital ID: 482679. New York Public Library\" title=\"Pike and Henry Streets, Manhat... Digital ID: 482679. New York Public Library\"></a> <br>Pike and Henry Streets 1936");
-
-var marker3 = L.marker([40.719681,-73.982836], {icon: greenIcon})
-            .addTo(map)
-			.bindPopup("<a href=\"http://digitalgallery.nypl.org/nypldigital/id?1558111\" title=\"Stanton Street - Ridge Street ... Digital ID: 1558111. New York Public Library\"><img src=\"http://images.nypl.org/?id=1558111&t=r\" alt=\"Stanton Street - Ridge Street ... Digital ID: 1558111. New York Public Library\" title=\"Stanton Street - Ridge Street ... Digital ID: 1558111. New York Public Library\"></a> <br>Stanton Street - Ridge Street 1934");
-
-var marker4 = L.marker([40.704534,-74.009475], {icon: greenIcon})
-            .addTo(map)
-			.bindPopup("<a href=\"http://digitalgallery.nypl.org/nypldigital/id?482822\" title=\"Hanover Square, Manhattan. Digital ID: 482822. New York Public Library\"><img src=\"http://images.nypl.org/?id=482822&t=r\" alt=\"Hanover Square, Manhattan. Digital ID: 482822. New York Public Library\" title=\"Hanover Square, Manhattan. Digital ID: 482822. New York Public Library\"></a> <br>Hanover Square 1936");
-
-var marker5 = L.marker([40.717587,-73.995249], {icon: greenIcon})
-            .addTo(map)
-			.bindPopup("<a href=\"http://digitalgallery.nypl.org/nypldigital/id?482799\" title=\"Blossom Restaurant, 103 Bowery... Digital ID: 482799. New York Public Library\"><img src=\"http://images.nypl.org/?id=482799&t=r\" alt=\"Blossom Restaurant, 103 Bowery... Digital ID: 482799. New York Public Library\" title=\"Blossom Restaurant, 103 Bowery... Digital ID: 482799. New York Public Library\"></a> <br>Blossom Restaurant, 103 Bowery 1935");
-
-var marker6 = L.marker([40.714578,-73.982101], {icon: greenIcon})
-            .addTo(map)
-			.bindPopup("<a href=\"http://digitalgallery.nypl.org/nypldigital/id?482691\" title=\"Grand Street, nos. 511-513, Ma... Digital ID: 482691. New York Public Library\"><img src=\"http://images.nypl.org/?id=482691&t=r\" alt=\"Grand Street, nos. 511-513, Ma... Digital ID: 482691. New York Public Library\" title=\"Grand Street, nos. 511-513, Ma... Digital ID: 482691. New York Public Library\"></a> <br>Grand Street 1937");
-
-var marker7 = L.marker([40.712053,-74.013961], {icon: greenIcon})
-            .addTo(map)
-			.bindPopup("<a href=\"http://digitalgallery.nypl.org/nypldigital/id?482550\" title=\"Dey Street between West and Wa... Digital ID: 482550. New York Public Library\"><img src=\"http://images.nypl.org/?id=482550&t=r\" alt=\"Dey Street between West and Wa... Digital ID: 482550. New York Public Library\" title=\"Dey Street between West and Wa... Digital ID: 482550. New York Public Library\"></a> <br>Dey Street 1936");
-
-var marker8 = L.marker([40.720167,-73.997697], {icon: greenIcon})
-            .addTo(map)
-			.bindPopup("<a href=\"http://digitalgallery.nypl.org/nypldigital/id?482668\" title=\"Gunsmith, 6 Centre Market Plac... Digital ID: 482668. New York Public Library\"><img src=\"http://images.nypl.org/?id=482668&t=r\" alt=\"Gunsmith, 6 Centre Market Plac... Digital ID: 482668. New York Public Library\" title=\"Gunsmith, 6 Centre Market Plac... Digital ID: 482668. New York Public Library\"></a> <br>Gunsmith, 6 Centre Market Place 1937");
-
-var marker9 = L.marker([40.723356,-73.99298], {icon: greenIcon})
-            .addTo(map)
-			.bindPopup("<a href=\"http://digitalgallery.nypl.org/nypldigital/id?482852\" title=\"Tri-boro Barber School, 264 Bo... Digital ID: 482852. New York Public Library\"><img src=\"http://images.nypl.org/?id=482852&t=r\" alt=\"Tri-boro Barber School, 264 Bo... Digital ID: 482852. New York Public Library\" title=\"Tri-boro Barber School, 264 Bo... Digital ID: 482852. New York Public Library\"></a> <br>Barbers, 264 Bowery 1935");
-
-var marker10 = L.marker([40.710953,-74.009137], {icon: greenIcon})
-            .addTo(map)
-			.bindPopup("<a href=\"http://digitalgallery.nypl.org/nypldigital/id?800611\" title=\"Lower Broadway, looking south ... Digital ID: 800611. New York Public Library\"><img src=\"http://images.nypl.org/?id=800611&t=r\" alt=\"Lower Broadway, looking south ... Digital ID: 800611. New York Public Library\" title=\"Lower Broadway, looking south ... Digital ID: 800611. New York Public Library\"></a> <br>Broadway / Fulton St 1899");
-
-var marker11 = L.marker([40.713631,-73.99018], {icon: greenIcon})
-            .addTo(map)
-			.bindPopup("<a href=\"http://digitalgallery.nypl.org/nypldigital/id?3984332\" title=\"[Lower East Side street view: ... Digital ID: 3984332. New York Public Library\"><img src=\"http://images.nypl.org/?id=3984332&t=r\" alt=\"[Lower East Side street view: ... Digital ID: 3984332. New York Public Library\" title=\"[Lower East Side street view: ... Digital ID: 3984332. New York Public Library\"></a> <br>16 Rutgers Place 1934");
-
-var marker12 = L.marker([40.721616,-74.005088], {icon: greenIcon})
-            .addTo(map)
-			.bindPopup("<a href=\"<a href=\"http://digitalgallery.nypl.org/nypldigital/id?805635\" title=\"An old landmark on the Lower W... Digital ID: 805635. New York Public Library\"><img src=\"http://images.nypl.org/?id=805635&t=r\" alt=\"An old landmark on the Lower W... Digital ID: 805635. New York Public Library\" title=\"An old landmark on the Lower W... Digital ID: 805635. New York Public Library\"></a> <br>Old landmark on the Lower West Side 1899");
-
-var marker12 = L.marker([40.714737,-73.989322], {icon: greenIcon})
-            .addTo(map)
-			.bindPopup("<a href=\"http://digitalgallery.nypl.org/nypldigital/id?806166\" title=\"Girl�s May-pole, Seward Park. Digital ID: 806166. New York Public Library\"><img src=\"http://images.nypl.org/?id=806166&t=r\" alt=\"Girl�s May-pole, Seward Park. Digital ID: 806166. New York Public Library\" title=\"Girl�s May-pole, Seward Park. Digital ID: 806166. New York Public Library\"></a> <br>Seward Park 1890");
-
-var marker13 = L.marker([40.715151,-73.999681], {icon: greenIcon})
-            .addTo(map)
-			.bindPopup("<a href=\"http://digitalgallery.nypl.org/nypldigital/id?806160\" title=\"Mulberry St. & Columbus Park. Digital ID: 806160. New York Public Library\"><img src=\"http://images.nypl.org/?id=806160&t=r\" alt=\"Mulberry St. & Columbus Park. Digital ID: 806160. New York Public Library\" title=\"Mulberry St. & Columbus Park. Digital ID: 806160. New York Public Library\"></a><br>Mulberry Street & Columbus Park");
-
-var marker14 = L.marker([40.714297,-73.993501], {icon: greenIcon})
-            .addTo(map)
-			.bindPopup("<a href=\"http://digitalgallery.nypl.org/nypldigital/id?809825\" title=\"Old houses in Division St. bet... Digital ID: 809825. New York Public Library\"><img src=\"http://images.nypl.org/?id=809825&t=r\" alt=\"Old houses in Division St. bet... Digital ID: 809825. New York Public Library\" title=\"Old houses in Division St. bet... Digital ID: 809825. New York Public Library\"></a> <br>Old Houses in Division St 1861");
-
-var marker15 = L.marker([40.717989,-73.997524], {icon: greenIcon})
-            .addTo(map)
-			.bindPopup("<a href=\"http://digitalgallery.nypl.org/nypldigital/id?837001\" title=\"Hester Street, N.Y. City. Digital ID: 837001. New York Public Library\"><img src=\"http://images.nypl.org/?id=837001&t=r\" alt=\"Hester Street, N.Y. City. Digital ID: 837001. New York Public Library\" title=\"Hester Street, N.Y. City. Digital ID: 837001. New York Public Library\"></a> <br>Hester St");
-
-var marker16 = L.marker([40.706376,-74.002712], {icon: greenIcon})
-            .addTo(map)
-			.bindPopup("<a href=\"http://digitalgallery.nypl.org/nypldigital/id?809864\" title=\"[South Street, New York City, ... Digital ID: 809864. New York Public Library\"><img src=\"http://images.nypl.org/?id=809864&t=r\" alt=\"[South Street, New York City, ... Digital ID: 809864. New York Public Library\" title=\"[South Street, New York City, ... Digital ID: 809864. New York Public Library\"></a> <br>South St 1900");
+		L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+			maxZoom: 18,
+			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+				'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+				'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+			id: 'examples.map-i875mjb7'
+		}).addTo(map);
 
 
-var baseLayers = {
-"Terrain": osmMap,
-"Terrain Labels": landMap,
-"OpenCycleMap": cycleMap,
-"Esri Satellite": satMap,
-"Roman Empire": romeMap,
-"Positron": guildMap,
-"Dark Matter": darkMap,
-"Map Warper": warperMap,
-};
+		L.marker([51.5, -0.09]).addTo(map)
+			.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
 
-var terrainLayer = osmMap;
-var layer = landMap;
-var satLayer = satMap;
-var cycleLayer = cycleMap;
-var romeLayer = romeMap;
-var guildLayer = guildMap;
-var darkLayer = darkMap;
-var warperLayer = warperMap;
+		L.circle([51.508, -0.11], 500, {
+			color: 'red',
+			fillColor: '#f03',
+			fillOpacity: 0.5
+		}).addTo(map).bindPopup("I am a circle.");
 
-function updateMap() {
-        
-map.addLayer(layer);
-map.removeLayer(terrainLayer);
-map.removeLayer(satLayer);
-map.removeLayer(cycleLayer);
-map.removeLayer(romeLayer);
-map.removeLayer(guildLayer);
-map.removeLayer(darkLayer);
-map.removeLayer(warperLayer);
-      }
-function updateTerrain() {
-        
-map.addLayer(terrainLayer);
-map.removeLayer(layer);
-map.removeLayer(satLayer);
-map.removeLayer(cycleLayer);
-map.removeLayer(romeLayer);
-map.removeLayer(guildLayer);
-map.removeLayer(darkLayer);
-map.removeLayer(warperLayer);
-      }
-function updateSat() {
-        
-map.addLayer(satLayer);
-map.removeLayer(layer);
-map.removeLayer(terrainLayer);
-map.removeLayer(cycleLayer);
-map.removeLayer(romeLayer);
-map.removeLayer(guildLayer);
-map.removeLayer(darkLayer);
-map.removeLayer(warperLayer);
-      }	
-function updateCycle() {
-        
-map.addLayer(cycleLayer);
-map.removeLayer(terrainLayer);
-map.removeLayer(layer);
-map.removeLayer(satLayer);
-map.removeLayer(romeLayer);
-map.removeLayer(guildLayer);
-map.removeLayer(darkLayer);
-map.removeLayer(warperLayer);
-      }
-function updateRome() {
-        
-map.addLayer(romeLayer);
-map.removeLayer(terrainLayer);
-map.removeLayer(layer);
-map.removeLayer(satLayer);
-map.removeLayer(cycleLayer);
-map.removeLayer(guildLayer);
-map.removeLayer(darkLayer);
-map.removeLayer(warperLayer);
-      }
-function updateGuild() {
-        
-map.addLayer(guildLayer);
-map.removeLayer(terrainLayer);
-map.removeLayer(layer);
-map.removeLayer(satLayer);
-map.removeLayer(cycleLayer);
-map.removeLayer(romeLayer);
-map.removeLayer(darkLayer);
-map.removeLayer(warperLayer);
-      }	
-function updateDark() {
-        
-map.addLayer(darkLayer);
-map.removeLayer(guildLayer);
-map.removeLayer(terrainLayer);
-map.removeLayer(layer);
-map.removeLayer(satLayer);
-map.removeLayer(cycleLayer);
-map.removeLayer(romeLayer);
-map.removeLayer(warperLayer);
-      }	 
-	  
-function updateWarper() {
-       
-map.addLayer(warperLayer);
-map.removeLayer(terrainLayer);
-map.removeLayer(layer);
-map.removeLayer(satLayer);
-map.removeLayer(romeLayer);
-map.removeLayer(guildLayer);
-map.removeLayer(darkLayer);
-map.removeLayer(cycleLayer);
-      }	 	   		   	  
-</script>
+		L.polygon([
+			[51.509, -0.08],
+			[51.503, -0.06],
+			[51.51, -0.047]
+		]).addTo(map).bindPopup("I am a polygon.");
+
+
+		var popup = L.popup();
+
+		function onMapClick(e) {
+			popup
+				.setLatLng(e.latlng)
+				.setContent("You clicked the map at " + e.latlng.toString())
+				.openOn(map);
+		}
+
+		map.on('click', onMapClick);
+
+	</script>
 </body>
 </html>
