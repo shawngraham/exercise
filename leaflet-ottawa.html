@@ -26,17 +26,17 @@
 		}).addTo(map);
 
 
-		L.marker([51.5, -0.09]).addTo(map)
+		L.marker([45.423, -75.696]).addTo(map)
 			.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
 
-		L.circle([ 45.423428, -75.696030], 500, {
+		L.circle([45.423428, -75.696030], 500, {
 			color: 'red',
 			fillColor: '#f03',
 			fillOpacity: 0.5
 		}).addTo(map).bindPopup("I am a circle.");
 
 		L.polygon([
-			[ 45.423200, -75.696],
+			[45.423200, -75.696],
 			[45.423198, -75.696002],
 			[45.423220, -75.700]
 		]).addTo(map).bindPopup("I am a polygon.");
