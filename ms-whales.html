@@ -11,7 +11,7 @@ var rm = new RiMarkov(RiTa.random(2,5));
    rm.minSentenceLength = 2;
    rm.maxSentenceLength = 15;
    
-RiTa.loadString('moby-dick.txt', function(text) {
+RiTa.loadString('archae.txt', function(text) {
 
 rm.loadText(text);
 var sentenceOne = rm.generateSentences(1);
