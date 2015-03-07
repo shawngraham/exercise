@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<style type="text/css">
+
+div#sidebar {
+    position:fixed;
+    top:0px;
+    left:0px;
+    width: 250px;
+    height:400px;
+    overflow:scroll;
+
+    border: 1px solid black;
+    background: #eee;
+    padding: 5px;
+    }
+
+div#sidebar_lists {
+    font-size: 75%;
+}
+#sidebar_term {
+    clear: both;
+    }
+    
+#termselect {
+    width: 100%;
+}
+div.sidebar_list {
+    width: 50%;
+    float:left;
+}
+
+div#argsopts {
+    float: right;
+}
+div.metadata {
+    font-size: 75%;
+}
+
+path.link {
+  fill: none;
+  stroke: #666;
+  stroke-width: 1.5px;
+}
+
+marker#plain {
+  fill: #666;
+}
+
+marker#in {
+  fill: #44f;
+}
+
+marker#out {
+  fill: #0f0;
+}
+
+path.link.hlOut {
+    stroke: #0f0;
+    stroke-width: 2px;
+}
+path.link.hlIn, path.link.hlUndirected {
+    stroke: #44f;
+    stroke-width: 2px;
+}
+
+
+circle {
+  fill: #eee;
+  stroke: #333;
+  stroke-width: 1.5px;
+}
+circle.hl {
+    stroke: #f00;
+    fill: #f00;
+}
+circle.hlIn, circle.hlUndirected.hlUndirected, circle.hlUndirected {
+    stroke: #0f0;
+    fill: #cfc;
+}
+circle.hlOut {
+    stroke: #66f;
+    fill: #ccf;
+}
+circle.hlout.hlIn {
+    stroke: #66f;
+    fill: #cfc;
+}
+
+text {
+  font: 10px sans-serif;
+  pointer-events: none;
+}
+
+text.shad {
+  stroke: #fff;
+  stroke-width: 3px;
+  stroke-opacity: .8;
+}
+g.hl text.shad {
+    stroke: #fcc;
+      stroke-opacity: 1;
+}
+g.hlIn text.shad, g.hlUndirected text.shad {
+    stroke: #cfc;
+      stroke-opacity: 1;
+}
+g.hlOut text.shad {
+    stroke: #ddf;
+      stroke-opacity: 1;
+}
+
+
+ul { margin: 0; padding: 0; list-style-type: none;}
+    </style>
+  </head>
+  <body>
+  
+    <div id="sidebar">
+        <div id="sidebar_selectdiv"></div>
+        <h2 id="sidebar_term"></h2>
+        <div id="sidebar_lists">
+            <div class="sidebar_list" id="sidebar_inlist"></div>
+            <div class="sidebar_list" id="sidebar_outlist"></div>
+        </div>
+    </div>
+    <svg id="chart"></svg>
+  
+    <script type="text/javascript">
+    var json = {"profile": {"count": 1292, "retweetcount": 616, "geocount": 27, "latest": "2015-03-07 23:11:37 UTC", "earliest": "2015-02-28 21:32:49 UTC", "usercount": 81}, "nodes": [{"name": "alreadywonbig12", "title": "alreadywonbig12 (1 tweet)"}, {"name": "kubball", "title": "kubball (4 tweets)"}, {"name": "archives", "title": "archives (5 tweets)"}, {"name": "digital", "title": "digital (2 tweets)"}, {"name": "internet", "title": "internet (2 tweets)"}, {"name": "umassgha15", "title": "umassgha15 (3 tweets)"}, {"name": "keynoteaddress", "title": "keynoteaddress (2 tweets)"}, {"name": "brilliant", "title": "brilliant (4 tweets)"}, {"name": "colloquiumfatigue", "title": "colloquiumfatigue (3 tweets)"}, {"name": "performance", "title": "performance (17 tweets)"}, {"name": "ethnography", "title": "ethnography (2 tweets)"}, {"name": "friendshipcolloquium", "title": "friendshipcolloquium (1 tweet)"}, {"name": "colloquiumselfie", "title": "colloquiumselfie (1 tweet)"}, {"name": "cuhistory", "title": "cuhistory (1 tweet)"}, {"name": "history", "title": "history (14 tweets)"}, {"name": "publichistory", "title": "publichistory (6 tweets)"}, {"name": "oralhist", "title": "oralhist (5 tweets)"}, {"name": "publichist", "title": "publichist (2 tweets)"}, {"name": "thosefeels", "title": "thosefeels (3 tweets)"}, {"name": "artsrocks", "title": "artsrocks (1 tweet)"}, {"name": "highered", "title": "highered (3 tweets)"}, {"name": "magicofresearch", "title": "magicofresearch (3 tweets)"}, {"name": "goodluck", "title": "goodluck (1 tweet)"}, {"name": "architecture", "title": "architecture (12 tweets)"}, {"name": "photography", "title": "photography (14 tweets)"}, {"name": "ww1", "title": "ww1 (2 tweets)"}, {"name": "mcqueens15", "title": "mcqueens15 (13 tweets)"}, {"name": "twitterstorians", "title": "twitterstorians (12 tweets)"}, {"name": "constraints", "title": "constraints (3 tweets)"}, {"name": "academicshitdisturber", "title": "academicshitdisturber (3 tweets)"}, {"name": "worldwarone", "title": "worldwarone (3 tweets)"}, {"name": "coolstuff", "title": "coolstuff (2 tweets)"}, {"name": "victorian", "title": "victorian (3 tweets)"}, {"name": "twitterisaperformancetoo", "title": "twitterisaperformancetoo (7 tweets)"}, {"name": "digitalhistory", "title": "digitalhistory (7 tweets)"}, {"name": "google", "title": "google (3 tweets)"}, {"name": "dh", "title": "dh (2 tweets)"}, {"name": "gender", "title": "gender (3 tweets)"}, {"name": "data", "title": "data (2 tweets)"}, {"name": "pirate", "title": "pirate (2 tweets)"}, {"name": "googleghosts", "title": "googleghosts (2 tweets)"}, {"name": "captainhook", "title": "captainhook (1 tweet)"}, {"name": "halloween", "title": "halloween (1 tweet)"}, {"name": "googlekeywordplanner", "title": "googlekeywordplanner (1 tweet)"}, {"name": "thatssocarletonraven", "title": "thatssocarletonraven (1 tweet)"}, {"name": "captainkidd", "title": "captainkidd (1 tweet)"}, {"name": "treasure", "title": "treasure (1 tweet)"}, {"name": "medievalistproblems", "title": "medievalistproblems (2 tweets)"}, {"name": "arg", "title": "arg (1 tweet)"}, {"name": "pirates", "title": "pirates (1 tweet)"}, {"name": "ff", "title": "ff (3 tweets)"}, {"name": "uppercanada", "title": "uppercanada (2 tweets)"}, {"name": "followfriday", "title": "followfriday (3 tweets)"}, {"name": "cohortpride", "title": "cohortpride (2 tweets)"}, {"name": "arthistory", "title": "arthistory (4 tweets)"}, {"name": "engage", "title": "engage (1 tweet)"}, {"name": "mobilearchives", "title": "mobilearchives (15 tweets)"}, {"name": "oralhistory", "title": "oralhistory (18 tweets)"}, {"name": "iubb", "title": "iubb (1 tweet)"}, {"name": "social", "title": "social (4 tweets)"}, {"name": "grimsbytimescapes", "title": "grimsbytimescapes (14 tweets)"}, {"name": "participation", "title": "participation (1 tweet)"}, {"name": "corsets", "title": "corsets (4 tweets)"}, {"name": "womensbodies", "title": "womensbodies (4 tweets)"}, {"name": "migration", "title": "migration (3 tweets)"}, {"name": "ratherbesummer", "title": "ratherbesummer (2 tweets)"}, {"name": "wearewinter", "title": "wearewinter (2 tweets)"}, {"name": "winnipeg", "title": "winnipeg (2 tweets)"}, {"name": "1000sorrows", "title": "1000sorrows (2 tweets)"}, {"name": "downtonabbey", "title": "downtonabbey (4 tweets)"}, {"name": "envirohist", "title": "envirohist (3 tweets)"}, {"name": "machomen", "title": "machomen (2 tweets)"}, {"name": "savepoetry", "title": "savepoetry (2 tweets)"}, {"name": "upstairsdownstairs", "title": "upstairsdownstairs (1 tweet)"}, {"name": "heritageconservation", "title": "heritageconservation (2 tweets)"}, {"name": "savemontreal", "title": "savemontreal (1 tweet)"}, {"name": "fabulae", "title": "fabulae (6 tweets)"}, {"name": "historia", "title": "historia (6 tweets)"}, {"name": "fiction", "title": "fiction (2 tweets)"}, {"name": "medieval", "title": "medieval (2 tweets)"}, {"name": "medievallit", "title": "medievallit (1 tweet)"}, {"name": "medievalliterature", "title": "medievalliterature (1 tweet)"}, {"name": "theobituary", "title": "theobituary (6 tweets)"}, {"name": "firefly", "title": "firefly (7 tweets)"}, {"name": "serenity", "title": "serenity (4 tweets)"}, {"name": "josswhedon", "title": "josswhedon (5 tweets)"}, {"name": "grad", "title": "grad (7 tweets)"}, {"name": "wildwest", "title": "wildwest (1 tweet)"}, {"name": "gailscott", "title": "gailscott (2 tweets)"}, {"name": "audienceparticipation", "title": "audienceparticipation (1 tweet)"}, {"name": "blackconsciousness", "title": "blackconsciousness (1 tweet)"}, {"name": "filmcritic", "title": "filmcritic (1 tweet)"}, {"name": "hollywood", "title": "hollywood (1 tweet)"}, {"name": "flann", "title": "flann (2 tweets)"}, {"name": "hooligans", "title": "hooligans (6 tweets)"}, {"name": "canpoli", "title": "canpoli (2 tweets)"}, {"name": "ndp", "title": "ndp (3 tweets)"}, {"name": "politics", "title": "politics (1 tweet)"}, {"name": "socialmediamavens", "title": "socialmediamavens (3 tweets)"}, {"name": "hiphistorians", "title": "hiphistorians (3 tweets)"}, {"name": "english", "title": "english (3 tweets)"}, {"name": "theatre", "title": "theatre (3 tweets)"}, {"name": "hashtag", "title": "hashtag (3 tweets)"}, {"name": "germanthinkers", "title": "germanthinkers (1 tweet)"}, {"name": "masque", "title": "masque (2 tweets)"}, {"name": "nuclearwar", "title": "nuclearwar (1 tweet)"}, {"name": "oil", "title": "oil (3 tweets)"}, {"name": "southafrica", "title": "southafrica (2 tweets)"}, {"name": "kingcoal", "title": "kingcoal (2 tweets)"}, {"name": "princepetroleum", "title": "princepetroleum (2 tweets)"}, {"name": "1920s", "title": "1920s (3 tweets)"}, {"name": "freestuff", "title": "freestuff (2 tweets)"}, {"name": "cochairwoes", "title": "cochairwoes (2 tweets)"}, {"name": "wishicouldbeintwoplacesatonce", "title": "wishicouldbeintwoplacesatonce (2 tweets)"}, {"name": "swag", "title": "swag (1 tweet)"}, {"name": "gradschool", "title": "gradschool (6 tweets)"}, {"name": "twittertalk", "title": "twittertalk (1 tweet)"}, {"name": "getyourtwitteron", "title": "getyourtwitteron (1 tweet)"}, {"name": "gradstudies", "title": "gradstudies (1 tweet)"}, {"name": "ticktock", "title": "ticktock (1 tweet)"}, {"name": "rcjh", "title": "rcjh (1 tweet)"}, {"name": "sctopten", "title": "sctopten (1 tweet)"}, {"name": "magna", "title": "magna (1 tweet)"}, {"name": "11stra11ght", "title": "11stra11ght (2 tweets)"}, {"name": "11straight", "title": "11straight (1 tweet)"}, {"name": "rockchalk", "title": "rockchalk (2 tweets)"}, {"name": "ugly", "title": "ugly (1 tweet)"}, {"name": "carletonu", "title": "carletonu (1 tweet)"}, {"name": "conference", "title": "conference (6 tweets)"}, {"name": "beatou", "title": "beatou (1 tweet)"}, {"name": "carleton", "title": "carleton (3 tweets)"}, {"name": "goku", "title": "goku (1 tweet)"}], "args": ["21underhill.json"], "opts": {"keepother": false, "reciprocal": false, "graph": "undirected", "field": "hashtag", "template": "graph.html", "output": "embed", "threshold": 0, "exclude": "21underhill,gradresearch"}, "links": [{"source": 0, "target": 1, "value": 1}, {"source": 1, "target": 126, "value": 1}, {"source": 2, "target": 37, "value": 1}, {"source": 2, "target": 4, "value": 2}, {"source": 2, "target": 35, "value": 1}, {"source": 2, "target": 3, "value": 2}, {"source": 3, "target": 4, "value": 2}, {"source": 12, "target": 13, "value": 1}, {"source": 14, "target": 9, "value": 3}, {"source": 14, "target": 15, "value": 4}, {"source": 16, "target": 17, "value": 2}, {"source": 19, "target": 20, "value": 1}, {"source": 19, "target": 14, "value": 1}, {"source": 20, "target": 14, "value": 1}, {"source": 23, "target": 24, "value": 9}, {"source": 26, "target": 27, "value": 4}, {"source": 28, "target": 9, "value": 3}, {"source": 29, "target": 30, "value": 3}, {"source": 34, "target": 60, "value": 2}, {"source": 34, "target": 35, "value": 2}, {"source": 34, "target": 57, "value": 2}, {"source": 34, "target": 43, "value": 1}, {"source": 36, "target": 27, "value": 2}, {"source": 37, "target": 9, "value": 2}, {"source": 38, "target": 39, "value": 2}, {"source": 41, "target": 42, "value": 1}, {"source": 45, "target": 46, "value": 1}, {"source": 48, "target": 49, "value": 1}, {"source": 56, "target": 72, "value": 2}, {"source": 57, "target": 67, "value": 1}, {"source": 62, "target": 63, "value": 4}, {"source": 64, "target": 57, "value": 3}, {"source": 65, "target": 66, "value": 2}, {"source": 68, "target": 69, "value": 2}, {"source": 69, "target": 73, "value": 1}, {"source": 70, "target": 16, "value": 3}, {"source": 76, "target": 77, "value": 4}, {"source": 78, "target": 79, "value": 2}, {"source": 83, "target": 86, "value": 1}, {"source": 83, "target": 85, "value": 2}, {"source": 83, "target": 84, "value": 3}, {"source": 84, "target": 87, "value": 1}, {"source": 85, "target": 87, "value": 1}, {"source": 85, "target": 84, "value": 1}, {"source": 86, "target": 84, "value": 1}, {"source": 88, "target": 82, "value": 2}, {"source": 91, "target": 92, "value": 1}, {"source": 95, "target": 96, "value": 2}, {"source": 96, "target": 97, "value": 1}, {"source": 98, "target": 27, "value": 3}, {"source": 100, "target": 101, "value": 3}, {"source": 103, "target": 104, "value": 1}, {"source": 103, "target": 106, "value": 1}, {"source": 103, "target": 105, "value": 1}, {"source": 104, "target": 105, "value": 1}, {"source": 104, "target": 106, "value": 1}, {"source": 105, "target": 106, "value": 1}, {"source": 108, "target": 109, "value": 2}, {"source": 110, "target": 106, "value": 2}, {"source": 112, "target": 113, "value": 2}, {"source": 115, "target": 118, "value": 1}, {"source": 115, "target": 119, "value": 1}, {"source": 117, "target": 27, "value": 1}, {"source": 118, "target": 119, "value": 1}, {"source": 120, "target": 121, "value": 1}, {"source": 123, "target": 125, "value": 1}, {"source": 124, "target": 125, "value": 1}, {"source": 127, "target": 15, "value": 1}, {"source": 127, "target": 14, "value": 1}, {"source": 128, "target": 86, "value": 6}, {"source": 130, "target": 14, "value": 3}]};
+    
+    var mode = json["opts"]["mode"];
+    var threshold = json["opts"]["threshold"];
+    var graph = json["opts"]["graph"];
+    var field = json["opts"]["field"];
+    var links = json["links"];
+    var nodes = json["nodes"];
+    
+    switch (field) {
+        case "user": twitterlinkroot = "https://twitter.com/";
+            break;
+        case "hashtag": twitterlinkroot = "https://twitter.com/hashtag/";
+            break;
+    }
+    
+    // in directed graph we want different styles for in and out links, but
+    // in undirected they should be the same.
+    var inLinkClass = (graph == 'directed') ? "In" : "Undirected";
+    var outLinkClass = (graph == 'directed') ? "Out" : "Undirected";
+    
+    // hide the outlink div if this is an undirected graph
+    if (graph == 'undirected')
+         d3.select("#sidebar_outlist").remove();
+    
+    function twitterlink(n) {
+        return "<a href='" + twitterlinkroot + n + "'>" + n + "</n>";
+    }
+    
+    function selectlink(n) {
+        return "<a href='javascript:termselect(\"" + n + "\")'>" + n + "</n>";
+    }
+    
+    function listsort(l) {
+        sortl = [];
+        for (var a = 0; a < l.length; a++) {
+            sortl.push(l[a].toLowerCase() + " " + l[a]);
+        }
+        sortl = sortl.sort();
+        for (var a = 0; a < sortl.length; a++) {
+            sortl[a] = sortl[a].split(" ")[1];
+        }
+        return sortl;
+    }
+    
+    function listhtml(l) {
+        l = listsort(l);
+        var html = "<ul>";
+        for (var a = 0; a < l.length; a++) {
+            html += "<li>" + selectlink(l[a]) + "</li>";
+        }
+        html += "</ul>";
+        return html;
+    }
+    
+    function selecthtml(l) {
+        l = listsort(l);
+        // show threshold
+        html = "<div id='filename' class='metadata'>" + json["args"][0] + "</div>"
+        html += "<div id='argsopts' class='metadata'>Threshold: " + threshold;
+        if (mode) html += "<br/>Mode: " + mode;
+        html += "</div>";
+        html += "<select id='termselect' onchange='termselect(this.value)'>";
+        for (var a = 0; a < l.length; a++) {
+            html += "<option>" + l[a] + "</option>";
+        }
+        html += "</select>";
+        return html;
+    }
+    
+    function termselect(name) {
+           // working with:
+       //    this:
+       //    <circle class="" transform="translate(974.0229211897631,951.403518091633)" id="circle_RobertCBinkley" r="6">
+    //     <title>RobertCBinkley (1/1)</title>
+    //  </circle>
+    //  d:
+    //  {"name": "RobertCBinkley", "title": "RobertCBinkley (1/1)"}
+    //  path:
+    //        <path d="M952.2..." marker-end="url(#plain)" in="pabinkley" out="RobertCBinkley" 
+    //            class="link suit out_RobertCBinkley in_pabinkley hlOut"/>
+         
+           root = d3.select("#circle_" + name);
+           // show selected term in sidebar
+           d3.select("#sidebar_term").html(twitterlink(name));
+
+           
+           pathsfg = d3.select("#paths-fg");
+           circlesfg = d3.select("#circles-fg");
+           textsfg = d3.select("#texts-fg");
+           paths = d3.select("#paths");
+           circles = d3.select("#circles");
+           texts = d3.select("#texts");
+           
+           // clear previous selections
+           d3.selectAll(".hl").classed("hl", false);
+           d3.selectAll(".hl"+inLinkClass).classed("hl"+inLinkClass, false);
+           d3.selectAll(".hl"+outLinkClass).classed("hl"+outLinkClass, false);
+           // put foregrounded paths etc. (if any) back in background
+           var p = pathsfg.selectAll("path");
+           // add arrowheads if directed graph
+           if (graph == 'directed') 
+               p.attr("marker-end", "url(#plain)");
+           if (p.size() > 0)
+               d3.select("#paths").each(function() {
+                   f = this;
+                   p.each(function() { 
+                       f.appendChild(this) 
+                   });
+            })
+           var p = circlesfg.selectAll("circle");
+           if (p.size() > 0)
+               d3.select("#circles").each(function() {
+                   f = this;
+                   p.each(function() { 
+                       f.appendChild(this) 
+                   });
+            })
+           var p = textsfg.selectAll("g");
+           if (p.size() > 0)
+               d3.select("#texts").each(function() {
+                   f = this;
+                   p.each(function() { 
+                       f.appendChild(this) 
+                   });
+            })
+           
+        // highlight current node, paths, branch nodes
+           root.classed("hl", true);
+           d3.select("#text_" + name).classed("hl", true);
+           // highlight paths
+           var inlist = [];
+           var outlist = [];
+           var alllist = {}; // may have to handle duplicates, from in and out lists
+           p = d3.selectAll("path.out_" + name).classed("hl"+outLinkClass, true);
+           if (graph == 'directed')
+               p.attr("marker-end", "url(#out)")
+            p.each(function(d){
+               if (d.target.name != name) {
+                   if (graph == 'directed')
+                       outlist.push(d.target.name);
+                   else
+                       alllist[d.target.name] = true;
+                   d3.select("#circle_" + d.target.name).classed("hl"+inLinkClass, true); 
+                   d3.select("#text_" + d.target.name).classed("hl"+inLinkClass, true);
+               };
+           });
+           p = d3.selectAll("path.in_" + name).classed("hl"+inLinkClass, true);
+           if (graph == 'directed')
+               p.attr("marker-end", "url(#in)");
+           p.each(function(d){
+               if (d.source.name != name) {
+                   if (graph == 'directed')
+                       inlist.push(d.source.name);
+                   else
+                       alllist[d.source.name] = true;
+                   d3.select("#circle_" + d.source.name).classed("hl"+outLinkClass, true); 
+                   d3.select("#text_" + d.source.name).classed("hl"+outLinkClass, true);
+                   if (graph == 'directed')
+                       this["marker-end"] = "url(#out)";
+               };
+           });
+        var inlabel = {"retweets": "Retweeted by", "replies": "Replies to this", "mentions": "Mentioned"};
+        var outlabel = {"retweets": "Retweeted", "replies": "Replies from this", "mentions": "Mentioned by"};
+        if (graph == 'directed') {
+            d3.select("#sidebar_inlist").html("<h3>" + inlabel[mode] + "</h3>" + listhtml(inlist));
+            d3.select("#sidebar_outlist").html("<h3>" + outlabel[mode] + "</h3>" + listhtml(outlist));
+        }
+        else
+            d3.select("#sidebar_inlist").html("<h3>Co-Tags</h3>" + listhtml(Object.keys(alllist).sort()));
+
+        // move path to a different group: based on https://groups.google.com/forum/#!topic/d3-js/KEiqiUPZHUs
+           var p = paths.selectAll("path.out_" + name +", path.in_" + name);
+           if (p.size() > 0)
+               d3.select("#paths-fg").each(function() {
+                   f = this;
+                   p.each(function() { 
+                       f.appendChild(this) 
+                   });
+            })
+           var p = circles.selectAll(".hl, .hlIn, .hlOut, .hlUndirected");
+           if (p.size() > 0)
+               d3.select("#circles-fg").each(function() {
+                   f = this;
+                   p.each(function() { 
+                       f.appendChild(this) 
+                   });
+            })
+           var p = texts.selectAll(".hl, .hlIn, .hlOut, .hlUndirected");
+           if (p.size() > 0)
+               d3.select("#texts-fg").each(function() {
+                   f = this;
+                   p.each(function() { 
+                       f.appendChild(this) 
+                   });
+            })
+
+
+    }
+    
+
+// set box size to window size
+var win = window,
+    d = document,
+    e = d.documentElement,
+    g = d.getElementsByTagName('body')[0]
+
+// prepare list of terms for dropdown
+var terms = [];
+for (var a = 0; a < nodes.length; a++) {
+    terms.push(nodes[a]["name"]);
+}
+
+d3.select("#sidebar_selectdiv").html(selecthtml(terms));
+    
+// get viewport dimensions
+var portw = win.innerWidth || e.clientWidth || g.clientWidth,
+    porth = win.innerHeight|| e.clientHeight|| g.clientHeight;
+
+// make the svg really really big
+w = 2000;
+h = 2000;
+
+// but we'll want to scroll so that it is centred
+scrollx = (w >= portw) ? Math.round((w - portw)/2) : 0;
+scrolly = (h >= porth) ? Math.round((h - porth)/2) : 0;
+
+var force = d3.layout.force()
+    .nodes(d3.values(nodes))
+    .links(links)
+    .size([w, h])
+    .linkDistance(60)
+    .charge(-300)
+    .on("tick", tick)
+    .start();
+
+var svg = d3.select("#chart")
+    .attr("width", w)
+    .attr("height", h);
+
+// Per-type markers, as they don't inherit styles.
+svg.append("svg:defs").selectAll("marker")
+    .data(["plain", "in", "out"])
+  .enter().append("svg:marker")
+    .attr("id", String)
+    .attr("viewBox", "0 -5 10 10")
+    .attr("refX", 15)
+    .attr("refY", -1.5)
+    .attr("markerWidth", 6)
+    .attr("markerHeight", 6)
+    .attr("orient", "auto")
+  .append("svg:path")
+    .attr("d", "M0,-5L10,0L0,5");
+
+var path = svg.append("svg:g")
+    .attr("id", "paths")
+  .selectAll("path")
+    .data(force.links())
+  .enter().append("svg:path")
+    .attr("class", function(d) { return "link " + d.type + " out_" + d.source.name + " in_" + d.target.name; })
+    .attr("out", function(d) { return d.source.name; })
+    .attr("in", function(d) { return d.target.name; });
+// add arrowheads if directed graph
+if (graph == 'directed')
+    path.attr("marker-end", "url(#plain)");
+
+var circle = svg.append("svg:g")
+    .attr("id", "circles")
+    .selectAll("circle")
+    .data(force.nodes())
+  .enter().append("svg:circle")
+    .attr("r", 6)
+    .attr("id", function(d) {return "circle_" + d.name;})
+   .on("click", function(d) {
+        termselect(d.name);
+           })
+   .call(force.drag);
+
+// tooltips
+ circle.append("title")
+      .text(function(d) { return d.title; });
+
+var text = svg.append("svg:g")
+    .attr("id", "texts")
+    .selectAll("g")
+    .data(force.nodes())
+  .enter().append("svg:g")
+  .attr("id", function(d) {return "text_" + d.name;});
+
+// A copy of the text with a thick white stroke for legibility.
+text.append("svg:text")
+    .attr("x", 8)
+    .attr("y", ".31em")
+    .attr("class", "shad")
+    
+    .text(function(d) { return d.name; });
+
+text.append("svg:text")
+    .attr("x", 8)
+    .attr("y", ".31em")
+    .text(function(d) { return d.name; });
+
+// foreground groups: we move highlighted objects here, to bring them in front of the rest
+var pathsfg = svg.append("svg:g")
+    .attr("id", "paths-fg");
+var circlesfg = svg.append("svg:g")
+    .attr("id", "circles-fg");
+var textsfg = svg.append("svg:g")
+    .attr("id", "texts-fg");
+
+// Use elliptical arc path segments to doubly-encode directionality.
+function tick() {
+  path.attr("d", function(d) {
+    var dx = d.target.x - d.source.x,
+        dy = d.target.y - d.source.y,
+        dr = Math.sqrt(dx * dx + dy * dy);
+    return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+  });
+
+  circle.attr("transform", function(d) {
+    return "translate(" + d.x + "," + d.y + ")";
+  });
+
+  text.attr("transform", function(d) {
+    return "translate(" + d.x + "," + d.y + ")";
+  });
+}
+//    });
+
+window.scrollTo(scrollx, scrolly);
+</script>
+</body>
