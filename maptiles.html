@@ -95,6 +95,7 @@ romeUrl = 'http://maps.nypl.org/warper/maps/tile/15265/{z}/{x}/{y}.png',
 guildUrl = 'http://maps.nypl.org/warper/maps/tile/16172/{z}/{x}/{y}.png',
 darkUrl = 'http://maps.nypl.org/warper/maps/tile/15145/{z}/{x}/{y}.png',
 warperUrl = 'http://maps.nypl.org/warper/maps/tile/27562/{z}/{x}/{y}.png',
+ottawaUrl = 'http://warp.worldmap.harvard.edu/maps/tile/4152/{z}/{x}/{y}.png',
 
 osmAttrib = '&copy; ' + osmLink,
 thunAttrib = '&copy; '+warperLink;
@@ -103,7 +104,7 @@ romeAttrib = '&copy; '+warperLink;
 guildAttrib = '&copy; '+warperLink;
 cycleAttrib = '&copy; '+warperLink;
 warperAttrib = '&copy; '+warperLink;
-
+ottawaAttrib = '&copy; '+warperLink;
  
 var osmMap = L.tileLayer(osmUrl, {attribution: osmAttrib}),
 landMap = L.tileLayer(landUrl, {attribution: thunAttrib}),
@@ -113,11 +114,12 @@ guildMap = L.tileLayer(guildUrl, {attribution: guildAttrib}),
 cycleMap = L.tileLayer(cycleUrl, {attribution: cycleAttrib}),
 darkMap = L.tileLayer(darkUrl, {attribution: guildAttrib});
 warperMap = L.tileLayer(warperUrl, {attribution: warperAttrib});
+ottawaMap = L.tileLayer(warperUrl, {attribution: warperAttrib});
  
 var map = L.map('map', {
-layers: [romeMap] // only add one!
+layers: [ottawaMap] // only add one!
 })
-.setView([40.713761,-73.998082], 16);
+.setView([45.423200, -75.696], 16);
 
 var LeafIcon = L.Icon.extend({
 			options: {
