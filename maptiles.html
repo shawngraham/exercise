@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html>
 <head>
 <title>New York Vintage Maps</title>
 <meta charset="utf-8" />
-<link rel="stylesheet" href="leaflet.css">
+<link rel="stylesheet" href="leaflet.css"/>
     <style>
         body {
             padding: 0;
@@ -88,14 +87,14 @@
 var osmLink = '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>.',
 warperLink= 'Map tiles by The Lionel Pincus & Princess Firyal Map Division, The New York Public Library, under <a href="http://creativecommons.org/publicdomain/zero/1.0/">Creative Commons CC0 1.0 Universal Public Domain Dedication</a>.';
 
-var osmUrl = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',
-landUrl = 'http://warp.worldmap.harvard.edu/maps/tile/4152/{z}/{x}/{y}.png',
-cycleUrl = 'http://warp.worldmap.harvard.edu/maps/tile/4178/{z}/{x}/{y}.png',
-satUrl = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',
-romeUrl = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',
-guildUrl = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',
-darkUrl = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',
-warperUrl = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',
+var osmUrl = 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+landUrl = 'http://maps.nypl.org/warper/maps/tile/489850/{z}/{x}/{y}.png',
+cycleUrl = 'http://maps.nypl.org/warper/maps/tile/16758/{z}/{x}/{y}.png',
+satUrl = 'http://maps.nypl.org/warper/maps/tile/15178/{z}/{x}/{y}.png',
+romeUrl = 'http://maps.nypl.org/warper/maps/tile/15265/{z}/{x}/{y}.png',
+guildUrl = 'http://maps.nypl.org/warper/maps/tile/16172/{z}/{x}/{y}.png',
+darkUrl = 'http://maps.nypl.org/warper/maps/tile/15145/{z}/{x}/{y}.png',
+warperUrl = 'http://maps.nypl.org/warper/maps/tile/27562/{z}/{x}/{y}.png',
 
 osmAttrib = '&copy; ' + osmLink,
 thunAttrib = '&copy; '+warperLink;
@@ -116,9 +115,9 @@ darkMap = L.tileLayer(darkUrl, {attribution: guildAttrib});
 warperMap = L.tileLayer(warperUrl, {attribution: warperAttrib});
  
 var map = L.map('map', {
-layers: [landMap] // only add one!
+layers: [romeMap] // only add one!
 })
-.setView([45.423200, -75.696]], 13);
+.setView([40.713761,-73.998082], 16);
 
 var LeafIcon = L.Icon.extend({
 			options: {
