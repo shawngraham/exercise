@@ -8,7 +8,7 @@
 RiTa.p5Compatible(true);
     RiText.defaultFont("Georgia",18);  
 
-var rm = new RiMarkov(RiTa.random(2,3));
+var rm = new RiMarkov(RiTa.random(2,4));
    rm.minSentenceLength = 2;
    rm.maxSentenceLength = 10;
    
@@ -17,7 +17,7 @@ RiTa.loadString('dh.txt', function(text) {
 rm.loadText(text);
 var sentenceOne = rm.generateSentences(1);
 var sentenceTwo = rm.generateSentences(1);
-var output = sentenceOne + " " + sentenceTwo + " (" + rm.getN().toFixed(0) + "-gram)";
+var output = sentenceOne + "<br> " + sentenceTwo + " (" + rm.getN().toFixed(0) + "-gram)";
 console.log(rm.getN());
 
 RiText(output).draw();
