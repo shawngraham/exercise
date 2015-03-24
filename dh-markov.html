@@ -1,0 +1,36 @@
+<html>
+<meta http-equiv="refresh" content="30" />
+<head>
+<canvas id="canvas" width=1200 height=400 style="border: 3px dashed #000000; display: block; margin:0 auto;"></canvas>
+<script src="rita.js"></script>
+<script>
+
+RiTa.p5Compatible(true);
+    RiText.defaultFont("Georgia",18);  
+
+var rm = new RiMarkov(RiTa.random(2,5));
+   rm.minSentenceLength = 2;
+   rm.maxSentenceLength = 15;
+   
+RiTa.loadString('dh.txt', function(text) {
+
+rm.loadText(text);
+var sentenceOne = rm.generateSentences(1);
+var sentenceTwo = rm.generateSentences(1);
+var output = sentenceOne + " " + sentenceTwo + " (" + rm.getN().toFixed(0) + "-gram)";
+console.log(rm.getN());
+
+RiText(output).draw();
+});
+
+
+	
+</script>
+</head>
+<body>
+<br>
+<br>
+<br>
+<br>
+<br><small>Based on Mark Sample's <a href="https://gist.github.com/samplereality/d4ec9b3184956afce74a">'Moby Dick in Markov Chains'</a> Page automatically reloads for more algorithmic wisdom!</small>
+</body>
