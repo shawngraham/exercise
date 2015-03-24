@@ -8,9 +8,9 @@
 RiTa.p5Compatible(true);
     RiText.defaultFont("Georgia",18);  
 
-var rm = new RiMarkov(RiTa.random(2,4));
+var rm = new RiMarkov(RiTa.random(2,3));
    rm.minSentenceLength = 2;
-   rm.maxSentenceLength = 20;
+   rm.maxSentenceLength = 10;
    
 RiTa.loadString('dh.txt', function(text) {
 
