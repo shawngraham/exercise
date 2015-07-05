@@ -1,0 +1,21 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-color": "#7e7e7e",
+        "marker-size": "medium",
+        "marker-symbol": "",
+        "label": "inner harbour"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.70210266113281,
+          47.56401743101017
+        ]
+      }
+    }
+  ]
+}
