@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="000style.xsl"?>
+<teiCorpus>
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title>Digitised and Encoded copy of Negro Slavery by Zachary MacAulay</title>
+            </titleStmt>
+            <publicationStmt>
+                <authority>Transcribed from digital copy available from Recovered Histories at
+                    http://www.recoveredhistories.org/pamphlet1.php?page=1&amp;orderby=MaxID&amp;catid=66</authority>
+            </publicationStmt>
+            <sourceDesc>
+                <biblFull>
+                    <titleStmt>
+                        <title>Negro Slavery; or, A View of Some of the More Prominent Features of
+                            that State of Society, as it Exists in the United States of America and
+                            in the Colonies of the West Indies, Especially in Jamaica</title>
+                    </titleStmt>
+                    <publicationStmt>
+                        <publisher>Printed for Hatchard and Son, Piccadilly, and J. and A. Arch,
+                            Cornhill</publisher>
+                        <distributor>Sold Also by W. Graphel, Church street, and G. and J. Robison,
+                            Castle Street, Liverpool.</distributor>
+                        <date when="1823">1823</date>
+                        <pubPlace>
+                            <settlement>London</settlement>
+                        </pubPlace>
+                    </publicationStmt>
+                </biblFull>
+            </sourceDesc>
+        </fileDesc>
+    </teiHeader>
+    <TEI>
+        <teiHeader>
+            <fileDesc>
+                <titleStmt>
+                    <title/>
+                </titleStmt>
+                <publicationStmt>
+                    <authority>Transcribed by a student of Digital History at Sheffield Hallam
+                        University</authority>
+                </publicationStmt>
+                <sourceDesc>
+                    <bibl>
+                        <biblScope>1</biblScope>
+                    </bibl>
+                </sourceDesc>
+            </fileDesc>
+        </teiHeader>
+        <text>
+            <body>
+<p><biblScope>29</biblScope></p>
+<p>passage of Holy Writ; "They shall eat of the fruit of their own way, and be filled with their own devices." Is it possible for any serious mind to read the following extracts without acknowledging the righteous government and retributive justice of the almighty?</p>
+<p>"<interp Key="Logical to suggest that slavery reached into the culture and society of the United States" n="The Impact of Slavery, USHistory.org" cert="high" ref="http://www.ushistory.org/us/12a.asp"> the existence of slavery in the United States has a most visible effect upon the national character.</interp> It necessarily brutalizes the minds of the southern and western inhabitants; it lowers, indeed, the tone of hu-mane and correct feeling throughout the Union; and imperceptibly contributes to the existence of that great difference which here exists between theory and practice." <persName Key="Fearon, Henry Bradshaw" from="1770" to="????" role="physician" ref="http://famousamericans.net/henrybradshawfearon/"> Fearon</persName>, pp. 378, 379. </p>
+<p><persName Key="Hall, Francis" from="????" to="????" role="British lieutenant" ref="http://www.readingcloud.net/item/book/9781429000536">Mr.Hall</persName> gives his opinion upon the subject somewhat more at length.</p>
+<p><interp Key="Logical to suggest that slavery reached into the culture and society of the United States" n="The Impact of Slavery, USHistory.org" cert="high" ref="http://www.ushistory.org/us/12a.asp">"It is impossible to consider the character of the <placeName Key="Southern United States" ref="https://en.wikipedia.org/wiki/Southern_United_States">southern states</placeName>, without again adverting to the perni-cious effects of slavery.</interp></p>
+<p>"Land cultivated by slaves requires a considerable capital, and will therefore be divided among a small number of proprietors. Experience, too, shows that the quantity of labour performed by slaves is much below that of an equal number of free cultivators; the number of persons deriving support from the soil will consequently be less; but the loss is no in quantity only, the quality is proportionably deteriorated. He who commands the sweat of others, will be little inclined to toil himself*; the inclination will diminish with the necessity. The fact is so consonant with this remark, that in the southern states, the fisheries, and all branches of active exertion, fall into the hands of the New Eng-landers: so much so, that the city of <placeName Key="Charleston, United States," ref="https://tools.wmflabs.org/geohack/geohack.php?pagename=Charleston%2C_South_Carolina&params=32_47_00_N_79_56_00_W_type:city(120083)_region:US-SC">Charleston</placeName> is supplied with fish by smacks from Marble-head and</p>
+<p>*"'Of the proprietors of slaves, a very small proportion, indeed, are ever seen to labour.' <persName Key="Jefferson, ?" from="????" to="????" ref="?">Jefferson</persName>'s Notes, p. 241."</p>
+</body></text></TEI></teiCorpus>
+Add Comment Collapse
